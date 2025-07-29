@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: identity
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  task4:
+    image: ${DOCKER_REGISTRY-}task4
+    build:
+      context: .
+      dockerfile: Task4/Dockerfile
+    environment:
+      - ConnectionStrings__Database=Host=db;Port=5432;Database=identity;Username=postgres;Password=postgres
+    depends_on:
+      - db
+    ports:
+      - "5000:80"
+
+volumes:
+  postgres_data:
