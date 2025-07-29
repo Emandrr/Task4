@@ -12,16 +12,16 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Task4/Task4.csproj", "Task4/"]
+COPY ["Task4/Task4/Task4.csproj", "Task4/"]
 RUN dotnet restore "./Task4/Task4.csproj"
 COPY . .
 WORKDIR "/src/Task4"
-RUN dotnet build "./Task4.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Task4/Task4.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Этот этап используется для публикации проекта службы, который будет скопирован на последний этап
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Task4.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Task4/Task4.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Этот этап используется в рабочей среде или при запуске из VS в обычном режиме (по умолчанию, когда конфигурация отладки не используется)
 FROM base AS final
