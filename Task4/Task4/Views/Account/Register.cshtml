@@ -1,0 +1,87 @@
+﻿@model Task4.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Sign up";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head {
+    <link rel="stylesheet" href="~/css/registration.css" />
+}
+
+<div class="register-container-wrapper d-flex align-items-center justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="text-center mb-4">
+                    <h1 class="display-4 mb-2">@ViewData["Title"]</h1>
+                    <p class="lead">Create your new account.</p>
+                </div>
+
+                <div class="card register-form-content">
+                    <div class="card-body p-4">
+                        <form method="post" asp-controller="Account" asp-action="Register">
+                            @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ContainsKey(""))
+                            {
+                                <div class="alert alert-danger custom-error-center" role="alert">
+                                    @foreach (var error in ViewData.ModelState[""].Errors)
+                                    {
+                                        @error.ErrorMessage
+                                    }
+                                </div>
+                            }
+                            <div class="mb-3">
+                                <label asp-for="Login" class="form-label">Name</label>
+                                <input class="form-control"
+                                       placeholder="Enter your name"
+                                       asp-for="Login"
+                                       type=""
+                                       autocomplete="username" />
+                                <div asp-validation-for="Email" class="invalid-feedback d-block"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label">Email Address</label>
+                                <input class="form-control"
+                                       placeholder="Enter your email"
+                                       asp-for="Email"
+                                       type="text"
+                                       autocomplete="username" />
+                                <div asp-validation-for="Login" class="invalid-feedback d-block"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Password" class="form-label">Password</label>
+                                <input class="form-control"
+                                       placeholder="Create a strong password"
+                                       asp-for="Password"
+                                       type="password"
+                                       autocomplete="new-password" />
+                                <div asp-validation-for="Password" class="invalid-feedback d-block"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="PasswordConfirm" class="form-label">Confirm Password</label>
+                                <input class="form-control"
+                                       placeholder="Confirm your password"
+                                       asp-for="PasswordConfirm"
+                                       type="password"
+                                       autocomplete="new-password" />
+                                <div asp-validation-for="ConfirmPassword" class="invalid-feedback d-block"></div>
+                            </div>
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    Create Account
+                                </button>
+                            </div>
+
+                            <div class="login-link text-center">
+                                <p class="mb-0">
+                                    Already have an account?
+                                    <a asp-controller="Account" asp-action="Login">Sign in</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

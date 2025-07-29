@@ -1,0 +1,74 @@
+﻿@model Task4.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Sign in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head {
+    <link rel="stylesheet" href="~/css/login.css" />
+}
+
+<div class="login-container-wrapper d-flex align-items-center justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="text-center mb-4">
+                    <h1 class="display-4 mb-2">@ViewData["Title"]</h1>
+                    <p class="lead">Use a local account to log in.</p>
+                </div>
+
+                <div class="card login-form-content">
+                    <div class="card-body p-4">
+                        <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+
+                            @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ContainsKey(""))
+                            {
+                                <div class="alert alert-danger custom-error-center" role="alert">
+                                    @foreach (var error in ViewData.ModelState[""].Errors)
+                                    {
+                                        @error.ErrorMessage
+                                    }
+                                </div>
+                            }
+
+
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label">Email</label>
+                                <input class="form-control form-control-lg"
+                                       placeholder="Enter email"
+                                       asp-for="Email"
+                                       type="email"
+                                       autocomplete="username" />
+                                <div asp-validation-for="Email" class="invalid-feedback d-block"></div>
+                            </div>
+
+
+                            <div class="mb-4">
+                                <label asp-for="Password" class="form-label">Password</label>
+                                <input class="form-control form-control-lg"
+                                       placeholder="Password"
+                                       asp-for="Password"
+                                       type="password"
+                                       autocomplete="current-password" />
+                                <div asp-validation-for="Password" class="invalid-feedback d-block"></div>
+                            </div>
+
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    Login
+                                </button>
+                            </div>
+
+
+                            <div class="register-link text-center">
+                                <p class="mb-0">
+                                    No account?
+                                    <a asp-controller="Account" asp-action="Register">Sign up</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
