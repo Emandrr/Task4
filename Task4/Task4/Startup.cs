@@ -26,7 +26,7 @@ namespace Task4
             //services.AddScoped<BlockStatusFilter>();
             services.AddDbContext<ApplicationDbContext>(opt =>
             {
-                opt.UseNpgsql(Configuration.GetConnectionString("Database"));
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
             
             services.AddIdentity<User, IdentityRole>(opt =>
